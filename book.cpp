@@ -2,12 +2,12 @@
     #include "book.h"
 
     //Constructeurs par defaut
-    Book::Book():
-        title = "";
-        author = "";
-        isbn = "";
-        isAvaible = true;
-        borrowerName = "";
+    Book::Book()
+        : title(""),
+          author(""),
+          isbn(""),
+          isAvailable(true),
+          borrowerName("")
     {}
 
     //Constructeur avec param
@@ -20,42 +20,42 @@
     }
 
     //getters
-    Book::string getTitle() const {
+    string Book::getTitle() const {
         return title;
     }
-    Book::string getAuthor() const{
+    string Book::getAuthor() const{
         return author;
     }
-    Book::string getISBN() const {
+    string Book::getISBN() const {
         return isbn;
     }
-    Book::bool getAvailability() const {
-        return isAvaible;
+    bool Book::getAvailability() const {
+        return isAvailable;
     }
-    Book::string getBorrowerName() const{
+    string Book::getBorrowerName() const{
         return borrowerName;
     }
 
     //setters
-    Book::void setTitle(const string& titre) {
+    void Book::setTitle(const string& titre) {
         title = titre;
     }
-    Book::void setAuthor(const string& auteur){
+    void Book::setAuthor(const string& auteur){
         author = auteur;
     }
-    Book::void setISBN(const string& _isbn){
+    void Book::setISBN(const string& _isbn){
         isbn = _isbn;
     }
-    Book::void setAvailability(bool available){
+    void Book::setAvailability(bool available){
         isAvailable = available;
     }
-    Book::void setBorrowerName(const string& name){
+    void Book::setBorrowerName(const string& name){
         borrowerName = name;
     }
 
     //Methodes
     //Emprunter un livre, impossible si il n est pas dispo
-    Book::void checkOut(const string& borrower){
+    void Book::checkOut(const string& borrower){
     if(isAvailable){
             isAvailable = false;
             borrowerName = borrower;
@@ -65,23 +65,23 @@
 
     }
     //Retourner un live, devient disponinle 
-    Book::void returnBook(){
+    void Book::returnBook(){
         isAvailable = true;
         borrowerName = "";
     }
 
     //representation du livre (titre, auteur, isbn, disponibilite)
-    Book::string toString() const {
+    string Book::toString() const {
         return "Titre: " + title + ", Auteur: " + author + ", ISBN: " + isbn + ", Disponible: " + (isAvailable ? "Disponible" : "Indisponible") + (isAvailable ? "" : ", Emprunte par: " + borrowerName);
     }
 
     //format comme dans books.txt
-    Book::string toFileFormat() const {
+    string Book::toFileFormat() const {
     string line = title + "|" + author + "|" + isbn + "|" + (isAvailable ? "1" : "0") + "|" + borrowerName;
     return line;
     }
 
-    Book::void fromFileFormat(const string& line) {
+    void Book::fromFileFormat(const string& line) {
     size_t position =0 , nextPosition;
 
     //titre
