@@ -1,6 +1,6 @@
 #include <iostream>
 #include <algorithm>
-
+#include "filemanager.h"
 #include "library.h"
 
 using namespace std;
@@ -123,6 +123,10 @@ bool Library::checkOutBook(const string& isbn, const string& userId) {
     if (book && user && book->getAvailability()) {
         book->checkOut(user->getName());
         user->borrowBook(isbn);
+
+        FileManager fm; //gestionnaire de fichiers temporaire pour le log
+        std::string message = user->getName() + " a emprunté le livre '" + book->getTitle() + "' (ISBN: " + isbn + ")."; //message d empreint pr le log
+        fm.logActivity(message);//log de l activite d emprunt
         return true;
     }
     return false;
@@ -141,6 +145,10 @@ bool Library::returnBook(const string& isbn) {
             }
         }
         book->returnBook();
+
+        FileManager fm; //gestionnaire de fichiers temporaire pour le log
+        std::string message = "Le livre \"" + book->getTitle() + "\" (ISBN: " + book->getISBN() + ") a été retourné.";//message de retour pr le log
+        fm.logActivity(message); //log de l activite de retour
         return true;
     }
     return false;
@@ -201,7 +209,6 @@ void Library::displayAllBooksByTitle() {
     });
 
     //afficher les livres tries
-    std::cout << "\n=== TOUS LES LIVRES (TRIÉS PAR TITRE) ===\n";
     for (size_t i = 0; i < books.size(); i++){
         std::cout << "\nLivre " << (i + 1) << " :\n";
         std::cout << books[i]->toString() << "\n";
@@ -217,7 +224,6 @@ void Library::displayAllBooksByAuthor() {
     });
 
     //afficher les livres tries
-    std::cout << "\n=== TOUS LES LIVRES (TRIÉS PAR AUTEUR) ===\n";
     for (size_t i = 0; i < books.size(); i++){
         std::cout << "\nLivre " << (i + 1) << " :\n";
         std::cout << books[i]->toString() << "\n";

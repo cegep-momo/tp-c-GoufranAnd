@@ -2,12 +2,12 @@
 #include <iostream>
 #include <filesystem>
 #include "filemanager.h"
-
+#include <ctime>
 using namespace std;
 
 // Constructor
-FileManager::FileManager(const string& booksFile, const string& usersFile)
-    : booksFileName(booksFile), usersFileName(usersFile) {}
+FileManager::FileManager(const string& booksFile, const string& usersFile, const string& logsFile)
+    : booksFileName(booksFile), usersFileName(usersFile), logsFileName(logsFile) {}
 
 // Save all library data
 bool FileManager::saveLibraryData(Library& library) {
@@ -120,4 +120,22 @@ void FileManager::createBackup() {
     }
     
     cout << "Fichiers de sauvegarde créés.\n";
+}
+
+
+bool FileManager::logActivity(const std::string& message){
+        //ouvre le fichiers logs en mode ajout(ios:app, va permettre d ecrire a la fin du fichier sans ecraser le contenu)
+        ofstream file(logsFileName, ios::app);
+        if(!file.is_open()){
+           cout << "Erreur : Impossible d'ouvrir " << logsFileName << " en écriture.\n";
+            return false;
+        }
+
+        time_t now = time(nullptr); //recupere le temps actuel dans la variable now (nullptr = recupere directement)
+        tm* localTime = localtime(&now); //convertit le temps en heure locale
+
+        file << "[" << put_time(localTime, "%Y-%m-%d %H:%M:%S") << "] " << message << "\n"; //ecrit la date et l heure au format YYYY-MM-DD HH:MM:SS suivi du message
+
+        file.close();
+        return true;
 }
