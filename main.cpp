@@ -33,6 +33,7 @@ void displayMenu() {
     cout << "12. Sauvegarder les Données\n";
     cout << "13. Créer une Sauvegarde\n";
     cout << "14. Afficher Tous les Livres (Triés par Titre)\n";
+    cout << "15. Afficher Tous les Livres (Triés par Auteur)\n";
     cout << "0.  Quitter\n";
     cout << "======================================================\n";
     cout << "Entrez votre choix : ";
@@ -234,6 +235,12 @@ int main() {
 
             case 14: {
                 library.displayAllBooksByTitle();
+                pauseForInput();
+                break;
+            }
+
+            case 15: {
+                library.displayAllBooksByAuthor();
                 pauseForInput();
                 break;
             }
