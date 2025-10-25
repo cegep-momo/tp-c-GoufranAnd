@@ -193,6 +193,21 @@ void Library::displayAllUsers() {
     }
 }
 
+//Display les livres tries par titre
+void Library::displayAllBooksByTitle() {
+    //trier les livres par titre
+    std::sort(books.begin(), books.end(), [](const std::unique_ptr<Book>& a, const std::unique_ptr<Book>& b) {
+        return a->getTitle() < b->getTitle();
+    });
+
+    //afficher les livres tries
+    std::cout << "\n=== TOUS LES LIVRES (TRIÉS PAR TITRE) ===\n";
+    for (size_t i = 0; i < books.size(); i++){
+        std::cout << "\nLivre " << (i + 1) << " :\n";
+        std::cout << books[i]->toString() << "\n";
+    }
+}
+
 // Statistics
 int Library::getTotalBooks() const { return books.size(); }
 int Library::getAvailableBookCount() const {
